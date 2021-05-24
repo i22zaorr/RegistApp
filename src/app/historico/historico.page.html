@@ -1,0 +1,66 @@
+<div class="wrapper">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title class="ion-text-center" color="primary">Histórico del usuario</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref="registro" color="primary"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    <ion-card>
+      <ion-card-header class="ion-no-padding">
+        <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
+        <ion-card-title class="ion-text-center">Usuario: {{idUserLogged}}</ion-card-title>
+      </ion-card-header>
+      <ion-item>
+        <ion-label>Fecha</ion-label>
+        <ion-datetime type="text" displayFormat="DDDD D MMMM, YYYY" dayNames='Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado' monthNames='enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre' min="2020" [value]="currentDate(Datetime)"
+          [(ngModel)]="Datetime" (ionChange)="getSlotsforDate(Datetime)">
+        </ion-datetime>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-grid fixed>
+        <ion-row class="ion-no-padding">
+          <ion-col sizeLg="4" sizeMd="4" sizeXs="4" class="ion-no-padding" *ngFor="let locate of locates">
+            <ion-item class="ion-no-padding">
+
+              <!-- <ion-icon *ngIf="!locate.selected" color="" name="close" slot="start"></ion-icon>person-add-outline
+              <ion-icon *ngIf="locate.selected && locate.id==idUserLogged" color="primary" name="person-outline" slot="start"></ion-icon>           -->
+              <!-- <ion-icon *ngIf="locate.selected && locate.id!=idUserLogged" color="secondary" name="man" slot="start"></ion-icon> -->
+              <ion-icon class="ion-no-padding" [color]="locate.color" [name]="locate.name" slot="start"></ion-icon>
+              <!-- <ion-icon *ngIf="locate.selected && locate.id!=idUserLogged && locate.slot==(slotUserLogged-1)" color="danger" name="person-add-outline" slot="start"></ion-icon> -->
+
+              <ion-label *ngIf="locate.slot<10; else notShow">P0{{locate.slot}}</ion-label>
+              <ng-template #notShow>
+                P{{locate.slot}}
+              </ng-template>
+
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Posibles Contagios</ion-card-subtitle>
+      </ion-card-header>
+      <ion-grid fixed>
+        <ion-row class="ion-no-padding">
+          <ion-col sizeLg="4" sizeMd="4" sizeXs="4" class="ion-no-padding" *ngFor="let locate of locates; index as i">
+            <ion-item *ngIf="locate.color=='danger'" class="ion-no-padding">
+              <ion-icon *ngIf="locate.color=='danger'" [color]="locate.color" [name]="locate.name" slot="start" class="ion-no-padding"></ion-icon>
+              <ion-button fill="outline" (click)="getContactData(i)" *ngIf="locate.color=='danger'" >P{{locate.slot}} </ion-button>
+              <!-- <ion-icon color="danger" name="person-add-outline" slot="start"></ion-icon>
+              <ion-label color="danger">{{locates.indexOf(slotUserLogged).value}}</ion-label> -->
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-content>
+</div>

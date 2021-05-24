@@ -1,0 +1,30 @@
+<div class="wrapper">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title class="ion-text-center" color="primary">RegistApp</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content fullscreen>
+    <ion-card style="margin-top: 150px">
+      <ion-item>
+        <ion-label position="floating">Usuario</ion-label>
+        <ion-input clearInput [(ngModel)]="usuario" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input clearOnEdit [(ngModel)]="password" type="password" required></ion-input>
+      </ion-item>
+  </ion-card>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" [class.button-disabled]="!usuario || !password" color="primary" (click)="loginUser(usuario,password)">Iniciar sesión</ion-button>
+        <ion-button expand="block" fill="outline" color="secondary" (click)="crearUsuario()">¿Registrar Usuario?</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-content>
+
+</div>

@@ -1,0 +1,87 @@
+<div class="wrapper">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title class="ion-text-center" color="primary">Reserva</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button text="" defaultHref="home" color="primary"></ion-back-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button routerLink="/historico" style=position:right color="primary" class="ion-text-capitalize">Histórico
+        </ion-button>
+
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    <form [formGroup]="formSlot">
+      <ion-card style="padding: 5px">
+        <ion-card-header style="padding: 0px">
+          <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
+          <ion-card-title class="ion-text-center">Usuario: {{idUserLogged}}</ion-card-title>
+        </ion-card-header>
+        <ion-grid fixed>
+          <ion-item>
+            <ion-label>Fecha</ion-label>
+            <ion-datetime displayFormat="DDDD D MMMM, YYYY" dayNames='Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado' monthNames='enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre' min="2020" [value]="currentDate(Datetime)"
+              formControlName="date" [(ngModel)]="Datetime" (ionChange)="getSlotsforDate(Datetime)">
+            </ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label class="ion-no-padding">Hora de entrada</ion-label>
+            <ion-datetime class="ion-no-padding" displayFormat="HH:mm" minuteValues="0,15,30,45" value="08:00">
+            </ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label class="ion-no-padding">Hora de salida</ion-label>
+            <ion-datetime class="ion-no-padding" displayFormat="HH:mm" minuteValues="0,15,30,45" value="17:00">
+            </ion-datetime>
+          </ion-item>
+        </ion-grid>
+      </ion-card>
+
+      <ion-card>
+        <ion-grid>
+          <ion-radio-group class="ion-no-padding" formControlName="slot">
+            <ion-row class="ion-no-padding">
+              <ion-col sizeLg="4" sizeMd="4" sizeXs="4" class="ion-no-padding" *ngFor="let locate of locates">
+                <ion-item class="ion-no-padding">
+
+                  <ion-radio class="ion-no-padding" *ngIf="!locate.selected" slot="start" value="{{locate.slot}}">
+                  </ion-radio>
+                  <ion-icon class="ion-no-padding" *ngIf="locate.selected && locate.id==idUserLogged" color="primary"
+                    name="person-outline" slot="start"></ion-icon>
+                  <ion-icon class="ion-no-padding" *ngIf="locate.selected && locate.id!=idUserLogged" color="warning"
+                    name="person-circle-outline" slot="start"></ion-icon>
+
+                  <ion-label class="ion-no-padding" *ngIf="locate.slot<10; else notShow">P0{{locate.slot}}</ion-label>
+                  <ng-template #notShow>
+                    P{{locate.slot}}
+                  </ng-template>
+
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group>
+        </ion-grid>
+      </ion-card>
+
+      <ion-card>
+        <ion-grid>
+          <ion-row>
+            <ion-button [class.button-disabled]="!botonBorrar" fill="outline" color="danger" (click)="removeSlot()">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+            <ion-button [class.button-disabled]="!botonModificar || !formSlot.valid" fill="outline" color="secondary"
+              (click)="updateSlot()">Modificar</ion-button>
+            <ion-button [class.button-disabled]="botonModificar || !formSlot.valid" style="position:right"
+              color="primary" (click)="createSlot()">Reservar</ion-button>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+
+    </form>
+  </ion-content>
+</div>

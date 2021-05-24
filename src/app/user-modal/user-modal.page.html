@@ -1,0 +1,104 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+          <ion-button color="danger" (click)="closeModal()" >Cerrar</ion-button>
+    </ion-buttons>
+    <ion-title color="primary"> Alta usuario </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+    <form [formGroup]="formUser">
+        <ion-item>
+            <ion-label position="floating">ID</ion-label>
+            <ion-input ngDefaultControl formControlName="id" required></ion-input>
+        </ion-item>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.id.errors?.pattern && (formUser.get('id').dirty || formUser.get('id').touched)">
+          ID debe ser númerico.
+        </p>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.id.errors?.maxlength && (formUser.get('id').dirty || formUser.get('id').touched)">
+          ID la longitud máxima permitida son 10 carácteres.
+        </p>
+
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input ngDefaultControl formControlName="name" required></ion-input>
+        </ion-item>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.name.errors?.pattern && (formUser.get('name').dirty || formUser.get('name').touched)">
+          Nombre no debe contener números ni carácteres especiales.
+        </p>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.name.errors?.maxlength && (formUser.get('name').dirty || formUser.get('name').touched)">
+          Nombre la longitud máxima permitida son 20 carácteres.
+        </p>
+
+        <ion-item>
+              <ion-label position="floating">Apellidos</ion-label>
+              <ion-input ngDefaultControl formControlName="surname" required></ion-input>
+        </ion-item>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.surname.errors?.pattern && (formUser.get('surname').dirty || formUser.get('surname').touched)">
+          Apellidos no debe contener números ni carácteres especiales.
+        </p>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.surname.errors?.maxlength && (formUser.get('surname').dirty || formUser.get('surname').touched)">
+          Apellidos la longitud máxima permitida son 30 carácteres.
+        </p>
+
+        <ion-item>
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input ngDefaultControl formControlName="pass" type="password" required></ion-input>
+        </ion-item>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.pass.errors?.minlength && (formUser.get('pass').dirty || formUser.get('pass').touched)">
+          Contraseña la longitud mínima permitida son 4 carácteres.
+        </p>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.pass.errors?.maxlength && (formUser.get('pass').dirty || formUser.get('pass').touched)">
+          Contraseña la longitud máxima permitida son 32 carácteres.
+        </p>
+
+        <ion-item>
+            <ion-label position="floating">Repite la Contraseña</ion-label>
+            <ion-input ngDefaultControl formControlName="passVerified" type="password" required></ion-input>
+        </ion-item>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="formUser.get('passVerified').value != formUser.get('pass').value && (formUser.get('passVerified').dirty || formUser.get('passVerified').touched)">
+          Las contraseñas no coinciden.
+        </p>
+
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input ngDefaultControl formControlName="email" type="email" required></ion-input>
+        </ion-item>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.email.errors?.email && (formUser.get('email').dirty || formUser.get('email').touched)">
+          Email ejemplo: abc@uco.es.
+        </p>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.email.errors?.minlength && (formUser.get('email').dirty || formUser.get('email').touched)">
+          Email la longitud mínima permitida son 4 carácteres.
+        </p>
+        <p style="color: red; padding-left: 3%; font-size: smaller;" *ngIf="errorControl.email.errors?.maxlength && (formUser.get('email').dirty || formUser.get('email').touched)">
+          Email la longitud máxima permitida son 32 carácteres.
+        </p>
+    </form>
+  </ion-card>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <!-- *ngIf="formUser.valid && pass==passVerified" -->
+          <ion-button [class.button-disabled]="!formUser.valid"
+              expand="block" 
+              color="primary"
+              class="ion-margin-top"
+              type="submit"
+              (click)="createUser()"
+              >Crear</ion-button>
+              <!-- <ion-button 
+              fill="outline" 
+              expand="block" 
+              color="secondary"
+              class="ion-margin-top"
+              type="submit"
+              *ngIf="f.valid"
+              >Actualizar</ion-button> -->
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>
